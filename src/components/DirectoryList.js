@@ -1,11 +1,12 @@
 import React from 'react';
 import ipfs from './ipfs';
-import {Table,Button,Media } from 'react-bootstrap';
+import {Table,Button } from 'react-bootstrap';
 
 
 export class Directory extends React.Component{
 
       state={
+
         file:[
               {
               name: "",
@@ -13,15 +14,23 @@ export class Directory extends React.Component{
               size: null,
               hash: ""},
              ],
-        data:''
+        data:'',
+
+        email: {
+          sender: 'noreply@Homesave',
+          subject: 'File shared with you from Homesave',
+          text: ''
+          }
+        }
+
+        sendEmail (hash,name,props){
+          var url=`ipfs.io/ipfs/${hash}`
+          var recipient=this.refs.recepid.value;
+          this.setState({recipient});
+          console.log(recipient);
+          fetch(`http://127.0.0.1:4000/send-email?recipient=${recipient}&sender=${this.state.email.sender}&topic=${this.state.email.subject}&text=${name}${url}`).catch(err => console.error(err))
       };
 
-      constructor(props)
-      {
-        super(props);
-            var source=this.props.source
-
-      }//constructor
 
       deleteFiles(rmfname,props)
       {
@@ -48,58 +57,61 @@ export class Directory extends React.Component{
 
                 this.setState({file:res});
 
-                // this.filesls(this.state.file,this.props.source);
-
               }
           }.bind(this),
         )
       }
-
       componentDidMount(props)
           {
             this.getData();
-          }//component mounted
+          }
 
 
   render()
   {
     let listItems = this.state.file.map(file => {
         return (
+
           <tr>
           <td value={file.name}>{file.name}</td>
           <td><a href={`https://ipfs.io/ipfs/${file.hash}`}>{file.hash}</a></td>
-
-          <td ><Button value={file.name} className="glyphicon glyphicon-remove" onClick={this.deleteFiles.bind(this,file.name)} ></Button></td>
-
+          <td >
+          <input type="text" id="recepid" ref="recepid" placeholder = {"Enter recipient`s email-id"}/>
+          <Button value={file.hash} className="button" onClick={this.sendEmail.bind(this,file.hash,file.name)} >Share</Button>
+          </td>
+          <td ><Button value={file.name} className="button" onClick={this.deleteFiles.bind(this,file.name)} >Delete</Button>
+          </td >
           </tr>
 
         );
       });
 
     return(
-      <div>
-
-
-
-
+  <div>
+      <center>
+      <div className="container">
+      <br/><br/>
                           <h2>ipfs{this.props.source}</h2>
-
-                          <Table bordered responsive striped hover >
+      <br/><br/>
+      <div className="container">
+                          <Table bordered responsive striped hover width="75%">
                           <thead>
                             <tr>
                           <td>File Name</td>
-                          <td>File ess</td>
-                          <td>Click Button to Delete</td>
+                          <td>File hash</td>
+                          <td>Share File</td>
+                          <td>Delete File</td>
                             </tr>
                           </thead>
                             <tbody>
                             {listItems}
                             </tbody>
                           </Table>
+                          </div>
+                          </div>
 
-
-
-      </div>
+      </center>
+  </div>
     );
   }
 }
