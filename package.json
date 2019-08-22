@@ -1,24 +1,32 @@
 {
-  "name": "Homesave",
-  "version": "0.1.0",
+  "name": "homesave",
+  "version": "0.3.1",
   "private": true,
   "dependencies": {
-    "bootstrap": "^3.3.7",
-    "fs-extra": "^5.0.0",
-    "ipfs-api": "^18.1.1",
-    "react": "^16.8.4",
-    "react-bootstrap": "^0.32.1",
-    "react-dom": "^16.2.0",
-    "react-dropzone": "^4.2.8",
-    "react-router": "^5.0.0",
-    "react-router-dom": "^5.0.0",
-    "react-scripts": "^1.1.0",
-    "web3": "^1.0.0-beta2"
+    "@sendgrid/mail": "^6.3.1",
+    "bootstrap": "^4.3.1",
+    "crypto-js": "^3.1.9-1",
+    "ipfs-api": "^26.1.2",
+    "nodemailer": "^6.1.0",
+    "react": "^16.3.2",
+    "react-bootstrap": "^1.0.0-beta.12",
+    "react-dom": "^16.3.2",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.4",
+    "sendgrid": "^5.2.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "description": "IPFS file store",
+  "main": "index.js",
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "keywords": [],
+  "author": "Aryaman Dhawan",
+  "license": "ISC"
 }
