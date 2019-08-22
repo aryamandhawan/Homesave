@@ -1,43 +1,30 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './components/App.css';
-import favicon from './components/favicon.ico';
 import {Directory} from './components/DirectoryList.js';
 import {AddFile} from './components/AddFile.js';
-import {Table,Button,Div } from 'react-bootstrap';
+import {EDirectory} from './components/encrypteddir.js';
+import Navigation from "./components/Navigation";
 
 class App extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <div>
+          <Navigation />
+          <Switch>
+            <Route path="/" component={AddFile} exact/>
+            <Route path="/Files" render={(props) => <Directory key={'1'} {...props} source={'/Files'} />}/>
+            <Route path="/Photos" render={(props) => <Directory key={'2'} {...props} source={'/Photos'} />}/>
+            <Route path="/Misc" render={(props) => <Directory key={'3'} {...props} source={'/Misc'} />}/>
+            <Route path="/Encrypted" render={(props) => <EDirectory key={'4'} {...props} source={'/Encrypted'} />}/>
+            <Route path="/Decrypted" render={(props) => <Directory key={'5'} {...props} source={'/Decrypted'} />}/>
 
-
-
-    render() {
-      return (
-
-
-        <div className='Main'>
-
-        <center>
-            <img src={favicon} width="10%" height="10%"/>
-            <h1>IPFS File Manager</h1>
-            <AddFile/>
-        </center>
-            <div className="container">
-
-
-            <div className="ibox-content" size="100%">
-            <div class="p-3 mb-2 bg-dark text-white">
-
-            <Directory  source='/Files' / >
-            <Directory  source='/Photos'/ >
-            <Directory  source='/Misc'/ >
-            </div>
-            </div>
-            </div>
+          </Switch>
         </div>
-
-
-
-      );
-    }
-}
+      </BrowserRouter>
+    );
+  }
+};
 
 export default App;
